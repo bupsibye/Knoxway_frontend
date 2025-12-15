@@ -1,19 +1,56 @@
 import React from 'react';
+import { useTelegram } from '../hooks/useTelegram';
 
 export const ProfilePage: React.FC = () => {
+  const { user } = useTelegram();
+
+  // ссылка на аватар Telegram (если есть username)
+  const avatarUrl = user?.username
+    ? `https://t.me/i/userpic/320/${user.username}.jpg`
+    : null;
+
   return (
     <div style={{ padding: 16 }}>
       <h2>Профиль</h2>
 
-      <p>Данные пользователя не получены через Telegram Mini App API.</p>
-      <p>
-        В текущей конфигурации Telegram не передаёт информацию о пользователе в мини‑приложение,
-        поэтому здесь отображаются только заглушки.
-      </p>
+      {user ? (
+        <div style={{ marginTop: 12, display: 'flex', alignItems: 'center' }}>
+          {avatarUrl && (
+            <img
+              src={avatarUrl}
+              alt="avatar"
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: '50%',
+                marginRight: 12,
+                objectFit: 'cover',
+              }}
+            />
+          )}
+          <div>
+            <div style={{ fontWeight: 600 }}>
+              {user.first_name} {user.last_name || ''}
+            </div>
+            {user.username && (
+              <div style={{ fontSize: 13, opacity: 0.8 }}>
+                @{user.username}
+              </div>
+            )}
+            <div style={{ fontSize: 12, opacity: 0.7, marginTop: 4 }}>
+              ID: {user.id}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <p style={{ marginTop: 8 }}>
+          Данные профиля недоступны. Откройте Knox Market внутри Telegram, а не в браузере.
+        </p>
+      )}
 
       <div style={{ marginTop: 16 }}>
         <h3>Баланс</h3>
-        <p>Звёзды: 0 (заглушка)</p>
+        <p>Звёзды: 0 (пока заглушка)</p>
       </div>
 
       <div style={{ marginTop: 16 }}>
