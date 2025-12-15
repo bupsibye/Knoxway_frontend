@@ -32,15 +32,18 @@ export const ExchangePage: React.FC = () => {
     const sender = getMockSender(toUsername);
 
     try {
-      const res = await fetch('https://knoxway-backend.onrender.com/exchange/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fromUserId: sender.id,
-          fromUsername: sender.username,
-          toUsername,
-        }),
-      });
+      const res = await fetch(
+        'https://knoxway-backend.onrender.com/api/exchange/create',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fromUserId: sender.id,
+            fromUsername: sender.username,
+            toUsername,
+          }),
+        }
+      );
 
       const data = await res.json().catch(() => null as any);
 
@@ -66,8 +69,8 @@ export const ExchangePage: React.FC = () => {
       <h2>Обмен подарками</h2>
 
       <p style={{ fontSize: 13, marginTop: 4 }}>
-        Для теста используй @xaroca и @knifenrose. Если вводишь @xaroca, отправителем будет
-        @knifenrose, и наоборот.
+        Для теста используй @xaroca и @knifenrose. Если вводишь @xaroca, отправителем
+        будет @knifenrose, и наоборот.
       </p>
 
       <div style={{ marginTop: 16 }}>
