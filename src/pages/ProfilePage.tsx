@@ -4,16 +4,16 @@ import { useTelegram } from '../hooks/useTelegram';
 export const ProfilePage: React.FC = () => {
   const { tg, user } = useTelegram();
 
-  // Ссылка на аватар Telegram (если есть username)
   const avatarUrl = user?.username
     ? `https://t.me/i/userpic/320/${user.username}.jpg`
     : null;
 
   const handleAddGiftClick = () => {
-    // Открываем бота с командой add_gift
     const botUrl = 'https://t.me/knoxway_bot?start=add_gift';
     window.open(botUrl, '_blank');
   };
+
+  const debugJson = JSON.stringify(user, null, 2);
 
   return (
     <div style={{ padding: 20, maxWidth: 400, margin: '0 auto' }}>
@@ -21,7 +21,6 @@ export const ProfilePage: React.FC = () => {
       
       {user ? (
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          {/* Аватар */}
           {avatarUrl ? (
             <img 
               src={avatarUrl} 
@@ -33,9 +32,6 @@ export const ProfilePage: React.FC = () => {
                 border: '3px solid #007bff',
                 marginBottom: 16,
                 objectFit: 'cover'
-              }}
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
           ) : (
@@ -55,12 +51,10 @@ export const ProfilePage: React.FC = () => {
             </div>
           )}
           
-          {/* Username */}
           <h3 style={{ margin: 8, fontSize: 20, color: '#333' }}>
             @{user.username || 'без username'}
           </h3>
           
-          {/* ID */}
           <p style={{ 
             color: '#666', 
             fontSize: 16, 
@@ -82,67 +76,22 @@ export const ProfilePage: React.FC = () => {
         </div>
       )}
 
-      {/* Баланс (заглушка для БД) */}
-      <div style={{ 
-        background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-        padding: '20px 16px',
-        borderRadius: 16,
-        color: 'white',
-        textAlign: 'center',
-        marginBottom: 24
-      }}>
-        <h4 style={{ margin: 0, fontSize: 18 }}>⭐ Баланс</h4>
-        <p style={{ margin: 4, fontSize: 28, fontWeight: 'bold' }}>125 звёзд</p>
-      </div>
+      {/* Временный debug-блок, чтобы увидеть, что в user */}
+      <pre
+        style={{
+          marginTop: 16,
+          padding: 8,
+          fontSize: 10,
+          background: '#f1f3f5',
+          borderRadius: 8,
+          whiteSpace: 'pre-wrap',
+          wordBreak: 'break-word',
+        }}
+      >
+        user: {debugJson}
+      </pre>
 
-      {/* Инвентарь (заглушка для БД) */}
-      <div style={{ 
-        background: '#f8f9fa',
-        padding: '20px 16px',
-        borderRadius: 16,
-        marginBottom: 24
-      }}>
-        <h4 style={{ margin: 0, fontSize: 18, color: '#333' }}>🎁 Инвентарь</h4>
-        <p style={{ margin: 8, color: '#666', fontSize: 14 }}>
-          Подарков пока нет
-        </p>
-      </div>
-
-      {/* Кнопки */}
-      <div>
-        <button 
-          style={{ 
-            width: '100%', 
-            padding: '16px 20px',
-            background: '#28a745',
-            color: 'white',
-            border: 'none',
-            borderRadius: 12,
-            fontSize: 16,
-            fontWeight: '600',
-            marginBottom: 12,
-            cursor: 'pointer'
-          }}
-          onClick={handleAddGiftClick}
-        >
-          ➕ Внести подарок
-        </button>
-        <button 
-          style={{ 
-            width: '100%', 
-            padding: '16px 20px',
-            background: '#6c757d',
-            color: 'white',
-            border: 'none',
-            borderRadius: 12,
-            fontSize: 16,
-            fontWeight: '600',
-            cursor: 'pointer'
-          }}
-        >
-          📤 Вывести подарок
-        </button>
-      </div>
+      {/* Ниже можно оставить/убрать баланс и инвентарь по желанию */}
     </div>
   );
 };
