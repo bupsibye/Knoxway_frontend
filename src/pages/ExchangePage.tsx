@@ -56,7 +56,7 @@ export const ExchangePage: React.FC = () => {
       setStatus(
         `Предложение от @${sender.username} к ${toUsername} отправлено. Проверь сообщения у второго бота.`
       );
-    } catch (e) {
+    } catch {
       setStatus('Не удалось связаться с сервером');
     }
   };
