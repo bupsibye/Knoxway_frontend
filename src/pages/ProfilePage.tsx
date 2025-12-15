@@ -2,12 +2,22 @@ import React from 'react';
 import { useTelegram } from '../hooks/useTelegram';
 
 export const ProfilePage: React.FC = () => {
-  const { user } = useTelegram();
+  const { tg, user } = useTelegram();
 
   // ссылка на аватар Telegram (если есть username)
   const avatarUrl = user?.username
     ? `https://t.me/i/userpic/320/${user.username}.jpg`
     : null;
+
+  const handleAddGiftClick = () => {
+    // открываем бота и запускаем сценарий внесения подарка
+    const botUrl = 'https://t.me/knoxway_bot?start=add_gift';
+    if (tg) {
+      tg.openTelegramLink(botUrl);
+    } else {
+      window.open(botUrl, '_blank');
+    }
+  };
 
   return (
     <div style={{ padding: 16 }}>
@@ -33,9 +43,7 @@ export const ProfilePage: React.FC = () => {
               {user.first_name} {user.last_name || ''}
             </div>
             {user.username && (
-              <div style={{ fontSize: 13, opacity: 0.8 }}>
-                @{user.username}
-              </div>
+              <div style={{ fontSize: 13, opacity: 0.8 }}>@{user.username}</div>
             )}
             <div style={{ fontSize: 12, opacity: 0.7, marginTop: 4 }}>
               ID: {user.id}
@@ -63,6 +71,7 @@ export const ProfilePage: React.FC = () => {
             borderRadius: 8,
             border: '1px solid #ccc',
           }}
+          onClick={handleAddGiftClick}
         >
           Внести подарок
         </button>
