@@ -11,12 +11,17 @@ export function useTelegram() {
 
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
-    if (!tg) return;
+    if (!tg) {
+      console.log('Telegram WebApp not found');
+      return;
+    }
 
     tg.ready();
 
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
       setUser(tg.initDataUnsafe.user);
+    } else {
+      console.log('No user in initDataUnsafe', tg.initDataUnsafe);
     }
   }, []);
 
