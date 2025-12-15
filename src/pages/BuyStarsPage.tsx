@@ -12,7 +12,8 @@ export const BuyStarsPage: React.FC = () => {
       <h2 style={{ textAlign: 'center', marginBottom: 24 }}>Купить звёзды</h2>
 
       <p style={{ textAlign: 'center', marginBottom: 16 }}>
-        Покупка звёзд происходит через официальный сервис Spend.tg.
+        Получите услуги Telegram быстро — без KYC.
+Быстро. Безопасно. Просто. Fragment или Major через официальный сервис Spend.tg.
       </p>
 
       <button
@@ -29,7 +30,7 @@ export const BuyStarsPage: React.FC = () => {
           cursor: 'pointer',
         }}
       >
-        💳 Открыть покупку звёзд
+        💳 Открыть покупку звёзд на Spend.tg
       </button>
     </div>
   );
