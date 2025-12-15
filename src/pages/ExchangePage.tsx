@@ -4,13 +4,11 @@ export const ExchangePage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [status, setStatus] = useState<string | null>(null);
 
-  // ДВА тестовых пользователя
   const testUsers = [
     { id: 7626757547, username: 'xaroca' },
     { id: 7203050773, username: 'knifenrose' },
   ];
 
-  // Определяем "текущего" отправителя по тому, кого ты указал как второго
   const getMockSender = (toUsernameRaw: string) => {
     const clean = toUsernameRaw.replace(/^@/, '').toLowerCase();
     if (clean === 'xaroca') {
@@ -19,7 +17,6 @@ export const ExchangePage: React.FC = () => {
     if (clean === 'knifenrose') {
       return testUsers[0]; // отправитель xaroca
     }
-    // по умолчанию пусть будет первый
     return testUsers[0];
   };
 
@@ -45,9 +42,14 @@ export const ExchangePage: React.FC = () => {
         }),
       });
 
+      const data = await res.json().catch(() => null as any);
+
       if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        setStatus(data?.message || 'Ошибка при создании предложения');
+        setStatus(
+          data?.message ||
+            data?.error ||
+            `Ошибка: ${res.status} ${res.statusText || ''}`.trim()
+        );
         return;
       }
 
@@ -64,7 +66,8 @@ export const ExchangePage: React.FC = () => {
       <h2>Обмен подарками</h2>
 
       <p style={{ fontSize: 13, marginTop: 4 }}>
-        Для теста используй @xaroca и @knifenrose. Если вводишь @xaroca, отправителем будет @knifenrose, и наоборот.
+        Для теста используй @xaroca и @knifenrose. Если вводишь @xaroca, отправителем будет
+        @knifenrose, и наоборот.
       </p>
 
       <div style={{ marginTop: 16 }}>
