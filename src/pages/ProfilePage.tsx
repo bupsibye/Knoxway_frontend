@@ -4,13 +4,11 @@ import { useTelegram } from '../hooks/useTelegram';
 export const ProfilePage: React.FC = () => {
   const { tg, user } = useTelegram();
 
-  // ссылка на аватар Telegram (если есть username)
   const avatarUrl = user?.username
     ? `https://t.me/i/userpic/320/${user.username}.jpg`
     : null;
 
   const handleAddGiftClick = () => {
-    // важно: передаем start=add_gift, чтобы бот запустил нужный сценарий
     const botUrl = 'https://t.me/knoxway_bot?start=add_gift';
     if (tg) {
       tg.openTelegramLink(botUrl);
