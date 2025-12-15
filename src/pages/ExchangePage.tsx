@@ -32,7 +32,7 @@ export const ExchangePage: React.FC = () => {
     const sender = getMockSender(toUsername);
 
     try {
-      const res = await fetch('https://knoxway-backend.onrender.com/api/exchange/create', {
+      const res = await fetch('https://knoxway-backend.onrender.com/exchange/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
