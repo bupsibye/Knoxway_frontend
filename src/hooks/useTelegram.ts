@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
 
+declare global {
+  interface Window {
+    Telegram?: any;
+  }
+}
+
 export function useTelegram() {
-  const [webApp, setWebApp] = useState<WebApp | null>(null);
+  const [user, setUser] = useState<any | null>(null);
 
   useEffect(() => {
-    if (window.Telegram?.WebApp) {
-      const app = window.Telegram.WebApp;
-      app.expand();
-      setWebApp(app);
+    const tg = window.Telegram?.WebApp;
+    if (!tg) return;
+
+    tg.ready();
+
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+      setUser(tg.initDataUnsafe.user);
     }
   }, []);
 
-  const user = webApp?.initDataUnsafe.user;
-
-  return { webApp, user };
+  return { user };
 }
