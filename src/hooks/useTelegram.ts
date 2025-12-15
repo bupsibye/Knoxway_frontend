@@ -7,24 +7,24 @@ declare global {
 }
 
 export function useTelegram() {
-  const [tg, setTg] = useState<any | null>(null);
-  const [user, setUser] = useState<any | null>(null);
+  const [tg, setTg] = useState<any>(null);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const webApp = window.Telegram?.WebApp;
-
-    if (!webApp) {
-      console.log('Telegram WebApp not found (вероятно, открыто в браузере)');
-      return;
-    }
-
-    setTg(webApp);
-    webApp.ready();
-
-    if (webApp.initDataUnsafe && webApp.initDataUnsafe.user) {
-      setUser(webApp.initDataUnsafe.user);
+    const telegram = window.Telegram?.WebApp;
+    
+    if (telegram) {
+      // Инициализация Telegram WebApp
+      telegram.ready();
+      
+      // Данные пользователя из initDataUnsafe
+      const userData = telegram.initDataUnsafe?.user;
+      setTg(telegram);
+      setUser(userData);
+      
+      console.log('Telegram user:', userData);
     } else {
-      console.log('No user in initDataUnsafe', webApp.initDataUnsafe);
+      console.log('Telegram WebApp not available');
     }
   }, []);
 
