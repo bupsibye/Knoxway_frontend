@@ -4,85 +4,143 @@ import { useTelegram } from '../hooks/useTelegram';
 export const ProfilePage: React.FC = () => {
   const { tg, user } = useTelegram();
 
+  // Ссылка на аватар Telegram (если есть username)
   const avatarUrl = user?.username
     ? `https://t.me/i/userpic/320/${user.username}.jpg`
     : null;
 
   const handleAddGiftClick = () => {
+    // Открываем бота с командой add_gift
     const botUrl = 'https://t.me/knoxway_bot?start=add_gift';
-    if (tg) {
-      tg.openTelegramLink(botUrl);
-    } else {
-      window.open(botUrl, '_blank');
-    }
+    window.open(botUrl, '_blank');
   };
 
   return (
-    <div style={{ padding: 16 }}>
-      <h2>Профиль</h2>
-
+    <div style={{ padding: 20, maxWidth: 400, margin: '0 auto' }}>
+      <h2 style={{ textAlign: 'center', color: '#333', marginBottom: 24 }}>👤 Профиль</h2>
+      
       {user ? (
-        <div style={{ marginTop: 12, display: 'flex', alignItems: 'center' }}>
-          {avatarUrl && (
-            <img
-              src={avatarUrl}
-              alt="avatar"
-              style={{
-                width: 56,
-                height: 56,
-                borderRadius: '50%',
-                marginRight: 12,
-                objectFit: 'cover',
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          {/* Аватар */}
+          {avatarUrl ? (
+            <img 
+              src={avatarUrl} 
+              alt="Аватар" 
+              style={{ 
+                width: 96, 
+                height: 96, 
+                borderRadius: '50%', 
+                border: '3px solid #007bff',
+                marginBottom: 16,
+                objectFit: 'cover'
+              }}
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
+          ) : (
+            <div style={{
+              width: 96,
+              height: 96,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 16,
+              fontSize: 36,
+              color: 'white'
+            }}>
+              {user.first_name?.[0]?.toUpperCase() || 'U'}
+            </div>
           )}
-          <div>
-            <div style={{ fontWeight: 600 }}>
-              {user.first_name} {user.last_name || ''}
-            </div>
-            {user.username && (
-              <div style={{ fontSize: 13, opacity: 0.8 }}>@{user.username}</div>
-            )}
-            <div style={{ fontSize: 12, opacity: 0.7, marginTop: 4 }}>
-              ID: {user.id}
-            </div>
-          </div>
+          
+          {/* Username */}
+          <h3 style={{ margin: 8, fontSize: 20, color: '#333' }}>
+            @{user.username || 'без username'}
+          </h3>
+          
+          {/* ID */}
+          <p style={{ 
+            color: '#666', 
+            fontSize: 16, 
+            background: '#f8f9fa', 
+            padding: '8px 16px',
+            borderRadius: 20,
+            display: 'inline-block',
+            marginBottom: 24
+          }}>
+            ID: <strong>{user.id}</strong>
+          </p>
         </div>
       ) : (
-        <p style={{ marginTop: 8 }}>
-          Данные профиля недоступны. Откройте Knox Market внутри Telegram, а не в
-          браузере.
-        </p>
+        <div style={{ textAlign: 'center', padding: 40, color: '#666' }}>
+          <p>Данные профиля недоступны</p>
+          <p style={{ fontSize: 14, marginTop: 8 }}>
+            Откройте приложение через кнопку бота @knoxway_bot
+          </p>
+        </div>
       )}
 
-      <div style={{ marginTop: 16 }}>
-        <h3>Баланс</h3>
-        <p>Звёзды: 0 (пока заглушка)</p>
+      {/* Баланс (заглушка для БД) */}
+      <div style={{ 
+        background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        padding: '20px 16px',
+        borderRadius: 16,
+        color: 'white',
+        textAlign: 'center',
+        marginBottom: 24
+      }}>
+        <h4 style={{ margin: 0, fontSize: 18 }}>⭐ Баланс</h4>
+        <p style={{ margin: 4, fontSize: 28, fontWeight: 'bold' }}>125 звёзд</p>
       </div>
 
-      <div style={{ marginTop: 16 }}>
-        <h3>Инвентарь</h3>
-        <button
-          style={{
-            width: '100%',
-            padding: 8,
-            marginBottom: 8,
-            borderRadius: 8,
-            border: '1px solid #ccc',
+      {/* Инвентарь (заглушка для БД) */}
+      <div style={{ 
+        background: '#f8f9fa',
+        padding: '20px 16px',
+        borderRadius: 16,
+        marginBottom: 24
+      }}>
+        <h4 style={{ margin: 0, fontSize: 18, color: '#333' }}>🎁 Инвентарь</h4>
+        <p style={{ margin: 8, color: '#666', fontSize: 14 }}>
+          Подарков пока нет
+        </p>
+      </div>
+
+      {/* Кнопки */}
+      <div>
+        <button 
+          style={{ 
+            width: '100%', 
+            padding: '16px 20px',
+            background: '#28a745',
+            color: 'white',
+            border: 'none',
+            borderRadius: 12,
+            fontSize: 16,
+            fontWeight: '600',
+            marginBottom: 12,
+            cursor: 'pointer'
           }}
           onClick={handleAddGiftClick}
         >
-          Внести подарок
+          ➕ Внести подарок
         </button>
-        <button
-          style={{
-            width: '100%',
-            padding: 8,
-            borderRadius: 8,
-            border: '1px solid #ccc',
+        <button 
+          style={{ 
+            width: '100%', 
+            padding: '16px 20px',
+            background: '#6c757d',
+            color: 'white',
+            border: 'none',
+            borderRadius: 12,
+            fontSize: 16,
+            fontWeight: '600',
+            cursor: 'pointer'
           }}
         >
-          Вывести подарок
+          📤 Вывести подарок
         </button>
       </div>
     </div>
