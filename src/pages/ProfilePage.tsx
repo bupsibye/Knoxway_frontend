@@ -10,7 +10,7 @@ export const ProfilePage: React.FC = () => {
     : null;
 
   const handleAddGiftClick = () => {
-    // открываем бота и запускаем сценарий внесения подарка
+    // важно: передаем start=add_gift, чтобы бот запустил нужный сценарий
     const botUrl = 'https://t.me/knoxway_bot?start=add_gift';
     if (tg) {
       tg.openTelegramLink(botUrl);
@@ -52,7 +52,8 @@ export const ProfilePage: React.FC = () => {
         </div>
       ) : (
         <p style={{ marginTop: 8 }}>
-          Данные профиля недоступны. Откройте Knox Market внутри Telegram, а не в браузере.
+          Данные профиля недоступны. Откройте Knox Market внутри Telegram, а не в
+          браузере.
         </p>
       )}
 
