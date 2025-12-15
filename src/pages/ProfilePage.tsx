@@ -2,7 +2,7 @@ import React from 'react';
 import { useTelegram } from '../hooks/useTelegram';
 
 export const ProfilePage: React.FC = () => {
-  const { tg, user } = useTelegram();
+  const { user } = useTelegram();
 
   const avatarUrl = user?.username
     ? `https://t.me/i/userpic/320/${user.username}.jpg`
