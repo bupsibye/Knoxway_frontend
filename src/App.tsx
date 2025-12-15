@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs, TabKey } from './components/Tabs';
 import { ExchangePage } from './pages/ExchangePage';
 import { ProfilePage } from './pages/ProfilePage';
@@ -8,14 +8,22 @@ import { useTelegram } from './hooks/useTelegram';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabKey>('exchange');
-  const { user } = useTelegram();
+  const { tg, user } = useTelegram();
+
+  // Инициализация Telegram WebApp
+  useEffect(() => {
+    if (tg) {
+      tg.ready();
+      tg.expand(); // Разворачиваем на полный экран
+    }
+  }, [tg]);
 
   const renderContent = () => {
     switch (activeTab) {
       case 'exchange':
         return <ExchangePage />;
       case 'profile':
-        return <ProfilePage user={user || null} />;
+        return <ProfilePage />;
       case 'buy-stars':
         return <BuyStarsPage />;
       case 'gifts-store':
@@ -31,6 +39,7 @@ const App: React.FC = () => {
         minHeight: '100vh',
         paddingBottom: 56,
         fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+        backgroundColor: '#f8f9fa',
       }}
     >
       {renderContent()}
