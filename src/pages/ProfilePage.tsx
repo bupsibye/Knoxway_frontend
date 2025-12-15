@@ -1,31 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 export const ProfilePage: React.FC = () => {
-  const [debug, setDebug] = useState<string>('');
-
-  useEffect(() => {
-    const tg = (window as any).Telegram?.WebApp;
-    if (!tg) {
-      setDebug('Telegram.WebApp not found');
-      return;
-    }
-
-    tg.ready();
-    setDebug(JSON.stringify(tg.initDataUnsafe || {}, null, 2));
-  }, []);
-
   return (
     <div style={{ padding: 16 }}>
-      <h2>Профиль (debug)</h2>
-      <pre
-        style={{
-          whiteSpace: 'pre-wrap',
-          wordBreak: 'break-word',
-          fontSize: 10,
-        }}
-      >
-        {debug || 'Ждём данные...'}
-      </pre>
+      <h2>Профиль</h2>
+
+      <p>Данные пользователя не получены через Telegram Mini App API.</p>
+      <p>
+        Сейчас Telegram не передаёт информацию о пользователе в это мини‑приложение.
+        Функции обмена и работы с подарками продолжают работать независимо от этого.
+      </p>
+
+      <div style={{ marginTop: 16 }}>
+        <h3>Баланс</h3>
+        <p>Звёзды: 0 (заглушка)</p>
+      </div>
+
+      <div style={{ marginTop: 16 }}>
+        <h3>Инвентарь</h3>
+        <button
+          style={{
+            width: '100%',
+            padding: 8,
+            marginBottom: 8,
+            borderRadius: 8,
+            border: '1px solid #ccc',
+          }}
+        >
+          Внести подарок
+        </button>
+        <button
+          style={{
+            width: '100%',
+            padding: 8,
+            borderRadius: 8,
+            border: '1px solid #ccc',
+          }}
+        >
+          Вывести подарок
+        </button>
+      </div>
     </div>
   );
 };
