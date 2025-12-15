@@ -12,7 +12,7 @@ export const BuyStarsPage: React.FC = () => {
       <h2 style={{ textAlign: 'center', marginBottom: 24 }}>Купить звёзды</h2>
 
       <p style={{ textAlign: 'center', marginBottom: 16 }}>
-        Покупка звёзд происходит через официальный сервис Telegram.
+        Покупка звёзд происходит через официальный сервис Spend.tg.
       </p>
 
       <button
